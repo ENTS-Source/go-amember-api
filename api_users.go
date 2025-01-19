@@ -1,4 +1,4 @@
-package amember
+package go_amember_api
 
 import "net/url"
 
