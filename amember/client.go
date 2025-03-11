@@ -92,6 +92,7 @@ func doRequest[R any](c *Client, endpoint string, query url.Values) (R, error) {
 		return zero, err
 	}
 	req.URL.RawQuery = query.Encode()
+	fmt.Println(req.URL.String())
 
 	res, err := http.DefaultClient.Do(req)
 	if res != nil {
