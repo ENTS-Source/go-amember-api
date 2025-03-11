@@ -39,7 +39,7 @@ func allPages[R any](c *Client, endpoint string, query url.Values) ([]R, error) 
 		if err != nil {
 			return nil, err
 		}
-
+		fmt.Println(val)
 		if page == 1 { // we incremented up above already
 			if t, ok := val["_total"]; ok {
 				if total, ok := t.(int); ok {
