@@ -100,7 +100,7 @@ func doRequest[R any](c *Client, endpoint string, query url.Values) (R, error) {
 		}(res.Body)
 	}
 	if err != nil || res == nil {
-		return zero, nil
+		return zero, err
 	}
 
 	if res.StatusCode == http.StatusOK {
