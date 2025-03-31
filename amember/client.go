@@ -108,7 +108,6 @@ func doRequest[R any](c *Client, endpoint string, query url.Values) (R, error) {
 		if err != nil {
 			return zero, err
 		}
-		fmt.Println(string(b))
 
 		var val R
 		err = json.Unmarshal(b, &val)
