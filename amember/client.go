@@ -42,8 +42,8 @@ func allPages[R any](c *Client, endpoint string, query url.Values) ([]R, error) 
 
 		if page == 1 { // we incremented up above already
 			if t, ok := val["_total"]; ok {
-				if total, ok := t.(int); ok {
-					expectedRecords = total
+				if total, ok := t.(float64); ok {
+					expectedRecords = int(total)
 				} else {
 					return nil, errors.New("error parsing total")
 				}
