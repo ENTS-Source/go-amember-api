@@ -2,7 +2,6 @@ package amember
 
 import (
 	"net/url"
-	"strconv"
 )
 
 type productRow struct {
@@ -15,7 +14,7 @@ type productNestedVal struct {
 }
 
 type productToCategoryNested struct {
-	CategoryId string `json:"product_category_id"`
+	CategoryId int `json:"product_category_id"`
 }
 
 func (c *Client) GetProductIdsForCategory(categoryId int) ([]string, error) {
@@ -29,11 +28,7 @@ func (c *Client) GetProductIdsForCategory(categoryId int) ([]string, error) {
 	ids := make([]string, 0)
 	for _, p := range products {
 		for _, c := range p.Nested.Map {
-			cint, err := strconv.Atoi(c.CategoryId)
-			if err != nil {
-				return nil, err
-			}
-			if cint == categoryId {
+			if c.CategoryId == categoryId {
 				ids = append(ids, p.Id)
 				break
 			}
