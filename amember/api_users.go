@@ -1,6 +1,7 @@
 package amember
 
 import (
+	"fmt"
 	"net/url"
 	"time"
 )
@@ -57,4 +58,20 @@ func (a UserAccess) IsActiveOn(date time.Time) (bool, error) {
 		return false, err
 	}
 	return date.After(start) && (date.Before(end) || date.Equal(end)), nil
+}
+
+func (c *Client) GetUser(id int) (User, error) {
+	query := url.Values{}
+	query.Set("_nested[]", "access")
+	val, err := doRequest[[]User](c, fmt.Sprintf("/api/users/%d", id), query)
+	if err != nil {
+		return User{}, err
+	}
+	return val[0], nil
+}
+
+func (c *Client) GetAllUsers() ([]User, error) {
+	query := url.Values{}
+	query.Set("_nested[]", "access")
+	return allPages[User](c, "/api/users", query)
 }
