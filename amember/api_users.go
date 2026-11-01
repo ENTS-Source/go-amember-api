@@ -23,8 +23,7 @@ type UserNested struct {
 }
 
 type UserAccess struct {
-	// Should be an int, but it's a string
-	ProductId string `json:"product_id"`
+	ProductId int `json:"product_id"`
 	// Format: YYYY-MM-DD
 	BeginDate string `json:"begin_date"`
 	// Format: YYYY-MM-DD
