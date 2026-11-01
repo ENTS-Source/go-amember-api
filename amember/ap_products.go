@@ -6,7 +6,7 @@ import (
 )
 
 type productRow struct {
-	Id     int              `json:"product_id"`
+	Id     string           `json:"product_id"`
 	Nested productNestedVal `json:"nested"`
 }
 
@@ -18,7 +18,7 @@ type productToCategoryNested struct {
 	CategoryId string `json:"product_category_id"`
 }
 
-func (c *Client) GetProductIdsForCategory(categoryId int) ([]int, error) {
+func (c *Client) GetProductIdsForCategory(categoryId int) ([]string, error) {
 	query := url.Values{}
 	query.Set("_nested[]", "product-product-category")
 	products, err := allPages[productRow](c, "/api/products", query)
@@ -26,7 +26,7 @@ func (c *Client) GetProductIdsForCategory(categoryId int) ([]int, error) {
 		return nil, err
 	}
 
-	ids := make([]int, 0)
+	ids := make([]string, 0)
 	for _, p := range products {
 		for _, c := range p.Nested.Map {
 			cint, err := strconv.Atoi(c.CategoryId)
